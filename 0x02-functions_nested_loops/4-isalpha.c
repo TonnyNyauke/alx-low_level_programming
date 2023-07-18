@@ -2,6 +2,8 @@
 
 /**
  * int _isalpha - a function that checks for alphabetic character.
+ *
+ * Return: 1 if alphabet, otherwise return 0
  */
 int _isalpha(int c)
 {
