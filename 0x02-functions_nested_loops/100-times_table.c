@@ -13,25 +13,30 @@ void print_times_table(int n)
 	{
 		for (i = 0; i <= n; i++)
 		{
-			for (j = 0; j <= n; j++)
+			_putchar('0');
+			for (j = 1; j <= n; j++)
 			{
+				_putchar(',');
+				_putchar(' ');
 				p = i * j;
-				if (j != 0)
+				if (p <= 99)
 				{
-					printf(", ");
+					_putchar(' ');
 				}
-				if (p < 10)
+				if (p <= 9)
 				{
-					printf("  %d", p);
+					_putchar(' ');
 				}
-				else if (p < 100)
+				if (p >= 100)
 				{
-					printf(" %d", p);
+					_putchar((p/100) + '0');
+					_putchar((p/10) % 10 + '0');
 				}
-				else
+				else if (p <= 99 && p >= 10)
 				{
-					printf("%d", p);
+					_putchar((p / 10) + '0');
 				}
+				_putchar((p % 10) + '0');
 			}
 			printf("\n");
 		}
