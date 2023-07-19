@@ -6,7 +6,7 @@
  * @b: second integer
  * Return: the result of adding a and b
  */
-int add(int m, int n)
+int add(int a, int b)
 {
-	return (m + n);
+	return (a + b);
 }
