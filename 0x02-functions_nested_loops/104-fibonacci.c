@@ -7,15 +7,15 @@
 int main(void)
 {
 	int i;
-	unsigned long int t1 = 1, t2 = 2, next = 0;
+	unsigned long int t1 = 1, t2 = 2, n = 0;
 
 	printf("%lu, %lu", t1, t2);
 	for (i = 3; i <= 98; i++)
 	{
-		next = t1 + t2;
-		printf(", %lu", next);
+		n = t1 + t2;
+		printf(", %lu", n);
 		t1 = t2;
-		t2 = next;
+		t2 = n;
 	}
 	printf("\n");
 	return (0);
