@@ -1,13 +1,14 @@
 #include <stdio.h>
 
 /**
- * main - finds and prints the first 98 Fibonacci numbers, starting with 1 and 2
+ * main - finds and prints the first 98 Fibonacci numbers,
+ * starting with 1 and 2
  * Return: Always 0 (Success)
  */
 int main(void)
 {
 	int i;
-	unsigned long int t1 = 1, t2 = 2, n = 0;
+	unsigned long int t1 = 0, t2 = 1, n = 0;
 
 	printf("%lu, %lu", t1, t2);
 	for (i = 3; i <= 98; i++)
