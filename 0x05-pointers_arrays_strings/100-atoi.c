@@ -3,14 +3,13 @@
 /**
  * _atoi - convert a string to an integer
  * @s: pointer to the string
- *
  * Return: the integer value of the string
  */
 int _atoi(char *s)
 {
-	int i;
-	int sign;
-	int num;
+	int i; /* variable to loop over the string */
+	int sign; /* variable to store the sign of the number */
+	int num; /* variable to store the number */
 
 	i = 0;
 	sign = 1;
@@ -19,10 +18,14 @@ int _atoi(char *s)
 	/* skip any non-digit characters */
 	while (s[i] < '0' || s[i] > '9')
 	{
-		/* change the sign if there is a - sign */
+		/* change the sign if there is a - or + sign */
 		if (s[i] == '-')
 		{
 			sign *= -1;
+		}
+		else if (s[i] == '+')
+		{
+			sign *= 1;
 		}
 		/* move to the next character */
 		i++;
@@ -40,4 +43,3 @@ int _atoi(char *s)
 	/* return the number with the sign */
 	return (num * sign);
 }
-
