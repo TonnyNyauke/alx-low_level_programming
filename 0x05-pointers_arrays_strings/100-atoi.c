@@ -7,39 +7,29 @@
  */
 int _atoi(char *s)
 {
-	int i; /* variable to loop over the string */
-	int sign; /* variable to store the sign of the number */
-	int num; /* variable to store the number */
+	int c = 0;
+	unsigned int ni = 0;
+	int min = 1;
+	int isi = 0;
 
-	i = 0;
-	sign = 1;
-	num = 0;
-
-	/* skip any non-digit characters */
-	while (s[i] < '0' || s[i] > '9')
+	while (s[c])
 	{
-		/* change the sign if there is a - or + sign */
-		if (s[i] == '-')
+		if (s[c] == 45)
 		{
-			sign *= -1;
+			min *= -1;
 		}
-		else if (s[i] == '+')
+		while (s[c] >= 48 && s[c] <= 57)
 		{
-			sign *= 1;
+			isi = 1;
+			ni = (ni * 10) + (s[c] - '0');
+			c++;
 		}
-		/* move to the next character */
-		i++;
+		if (isi == 1)
+		{
+			break;
+		}
+		c++;
 	}
-
-	/* convert the digits to an integer */
-	while (s[i] >= '0' && s[i] <= '9')
-	{
-		/* multiply the previous number by 10 and add the current digit */
-		num = num * 10 + (s[i] - '0');
-		/* move to the next character */
-		i++;
-	}
-
-	/* return the number with the sign */
-	return (num * sign);
+	ni *= min;
+	return (ni);
 }
