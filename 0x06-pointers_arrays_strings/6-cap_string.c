@@ -11,6 +11,10 @@ char *cap_string(char *s)
 	int i;
 	char prev_char;
 
+	if (s[0] >= 'a' && s[0] <= 'z')
+	{
+    		s[0] = s[0] - 'a' + 'A';
+	}
 	for (i = 0, prev_char = s[0]; s[i] != '\0'; i++)
 	{
 	if ((prev_char == ' ' || prev_char == '\t' || prev_char == '\n' ||
