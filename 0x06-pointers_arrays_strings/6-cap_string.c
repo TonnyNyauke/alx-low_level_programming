@@ -8,23 +8,20 @@
  */
 char *cap_string(char *s)
 {
-        int i = 0;
+	int i;
+	char prev_char;
 
-        while (s[i])
-        {
-                while (!(s[i] >= 'a' && s[i] <= 'z'))
-                {
-                        i++;
-                }
-                if ((s[i - 1] == ' ') || (s[i - 1] == '\t') 
-				|| (s[i - 1] == '\n') || (s[i - 1] == ',') 
-				|| (s[i - 1] == ';') || (s[i - 1] == '.') 
-				|| (s[i - 1] == '!') || (s[i - 1] == '?') 
-				|| (s[i - 1] == ' '' ') || (s[i - 1] == '(') 
-				|| (s[i - 1] == ')') || (s[i - 1] == '{') 
-				|| (s[i - 1] == '}') || i == 0)
-			s[i] -= 32;
-		i++;
+	for (i = 0, prev_char = s[0]; s[i] != '\0'; i++)
+	{
+	if ((prev_char == ' ' || prev_char == '\t' || prev_char == '\n' ||
+		prev_char == ',' || prev_char == ';' || prev_char == '.' ||
+		prev_char == '!' || prev_char == '?' || prev_char == '"' ||
+		prev_char == '(' || prev_char == ')' || prev_char == '{' ||
+		prev_char == '}') && (s[i] >= 'a' && s[i] <= 'z'))
+	{
+		s[i] = s[i] - 'a' + 'A';
+	}
+	prev_char = s[i];
 	}
 	return (s);
 }
