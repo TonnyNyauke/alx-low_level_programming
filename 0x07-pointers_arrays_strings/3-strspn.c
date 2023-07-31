@@ -10,11 +10,8 @@
 unsigned int _strspn(char *s, char *accept)
 {
 	unsigned int i, j, count;
-
-	/* initialize the count to zero */
 	count = 0;
 
-	/* loop through the string s */
 	for (i = 0; s[i] != '\0'; i++)
 	{
 		/* loop through the prefix substring accept */
