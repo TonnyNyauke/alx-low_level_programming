@@ -35,6 +35,6 @@ unsigned int _strspn(char *s, char *accept)
 	}
 
 	/* return the count */
-	return (coun)t;
+	return (count);
 }
 
