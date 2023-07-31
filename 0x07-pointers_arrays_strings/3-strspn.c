@@ -30,11 +30,11 @@ unsigned int _strspn(char *s, char *accept)
 		/* so we stop the outer loop and return the count */
 		if (accept[j] == '\0')
 		{
-			return count;
+			return (count);
 		}
 	}
 
 	/* return the count */
-	return count;
+	return (coun)t;
 }
 
