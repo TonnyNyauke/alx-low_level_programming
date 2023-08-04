@@ -2,28 +2,26 @@
 
 /**
  * main - multiplies two numbers
- * @argc: number of arguments
- * @argv: array of arguments
- *
- * Return: 0 (success), 1 (error)
+ * @argc: argument count
+ * @argv: argument vector
+ * Return: 0 if successful, 1 if not
  */
 int main(int argc, char *argv[])
 {
-	int a, b, result;
+	int num1, num2, product;
 
 	if (argc != 3)
 	{
-		char *error = "Error\n";
-		int i;
-
-		for (i = 0; error[i] != '\0'; i++)
-			_putchar(error[i]);
+		printf("Error\n");
 		return (1);
 	}
-	a = _atoi(argv[1]);
-	b = _atoi(argv[2]);
-	result = a * b;
-	print_number(result);
-	_putchar('\n');
+
+	num1 = atoi(argv[1]);
+	num2 = atoi(argv[2]);
+	product = num1 * num2;
+
+	printf("%d\n", product);
+
 	return (0);
 }
+
