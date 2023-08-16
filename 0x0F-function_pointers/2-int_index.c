@@ -6,7 +6,8 @@
  * @size: the size of the array
  * @cmp: the comparison function to use
  *
- * Return: the index of the first element that matches the comparison, or -1 if none or size <= 0
+ * Return: the index of the first element that matches the comparison,
+ * or -1 if none or size <= 0
  */
 int int_index(int *array, int size, int (*cmp)(int))
 {
