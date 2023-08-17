@@ -1,113 +1,51 @@
 #include "variadic_functions.h"
 
 /**
- * print_char - prints a char
- * @anything: va_list of arguments
- * @separator: separator string
- * @first: pointer to first flag
- *
- * Return: void
- */
-void print_char(va_list anything, char *separator, int *first)
-{
-	if (!(*first))
-		printf("%s", separator);
-	printf("%c", va_arg(anything, int));
-	*first = 0;
-}
-
-/**
- * print_int - prints an int
- * @anything: va_list of arguments
- * @separator: separator string
- * @first: pointer to first flag
- *
- * Return: void
- */
-void print_int(va_list anything, char *separator, int *first)
-{
-	if (!(*first))
-		printf("%s", separator);
-	printf("%d", va_arg(anything, int));
-	*first = 0;
-}
-
-/**
- * print_float - prints a float
- * @anything: va_list of arguments
- * @separator: separator string
- * @first: pointer to first flag
- *
- * Return: void
- */
-void print_float(va_list anything, char *separator, int *first)
-{
-	if (!(*first))
-		printf("%s", separator);
-	printf("%f", va_arg(anything, double));
-	*first = 0;
-}
-
-/**
- * print_string - prints a string
- * @anything: va_list of arguments
- * @separator: separator string
- * @first: pointer to first flag
- *
- * Return: void
- */
-void print_string(va_list anything, char *separator, int *first)
-{
-	if (!(*first))
-		printf("%s", separator);
-	char *string = va_arg(anything, char *);
-
-	if (string == NULL)
-		string = "(nil)";
-	printf("%s", string);
-	*first = 0;
-}
-
-/**
  * print_all - prints anything
  * @format: list of types of arguments passed to the function
+ * @...: actual arguments to be printed
  *
  * Return: void
  */
 void print_all(const char * const format, ...)
 {
-	va_list anything;
-	unsigned int i = 0;
-	char str;
-	char *separator = ", ";
-	int first = 1;
+	int i = 0;
+	char *str;
+	va_list list;
 
-	va_start(anything, format);
+	va_start(list, format);
 
 	while (format && format[i])
 	{
-		str = format[i];
-		switch (str)
+		if (i > 0 && (format[i - 1] == 'c' || format[i - 1] == 'i'
+		|| format[i - 1] == 'f' || format[i - 1] == 's'))
+			printf(", ");
+
+		switch (format[i])
 		{
 			case 'c':
-				print_char(anything, separator, &first);
+				printf("%c", va_arg(list, int));
 				break;
 			case 'i':
-				print_int(anything, separator, &first);
+				printf("%d", va_arg(list, int));
 				break;
 			case 'f':
-				print_float(anything, separator, &first);
+				printf("%f", va_arg(list, double));
 				break;
 			case 's':
-				print_string(anything, separator, &first);
+				str = va_arg(list, char *);
+				if (!str)
+					str = "(nil)";
+				printf("%s", str);
 				break;
 			default:
-				i++;
-				continue;
+				break;
 		}
+
 		i++;
 	}
+
 	printf("\n");
-	va_end(anything);
+	va_end(list);
 }
 
