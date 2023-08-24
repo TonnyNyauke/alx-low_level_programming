@@ -1,21 +1,21 @@
 #include "lists.h"
 
 /**
- * free_list - Frees the memory of a linked list.
- * @head: A pointer to the head of the linked list.
- *
- * Description: This function frees the memory allocated for each node
- *              and the duplicated strings within the nodes of the linked list.
+ * free_list - frees a list_t list
+ * @head: pointer to the head of the list
  */
+
 void free_list(list_t *head)
 {
-	list_t *current = head;
+	list_t *current;
+	list_t *next;
 
+	current = head;
 	while (current != NULL)
 	{
-		list_t *temp = current;
-		current = current->next;
-		free(temp->str);
-		free(temp);
+		next = current->next;
+		free(current->str);
+		free(current);
+		current = next;
 	}
 }
