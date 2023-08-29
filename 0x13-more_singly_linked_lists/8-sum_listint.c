@@ -1,4 +1,5 @@
 #include "lists.h"
+#include <limits.h> /* For INT_MAX */
 
 /**
  * sum_listint - Returns the sum of all the data (n)
@@ -11,22 +12,23 @@ int sum_listint(listint_t *head)
 	int sum = 0;
 	listint_t *current;
 
+	/* Return 0 for an empty list */
 	if (head == NULL)
-		return (0); /* Return 0 for an empty list */
+		return (0);
 
 	current = head;
 
 	while (current != NULL)
 	{
+		/* Handle integer overflow */
+		if (sum > INT_MAX - current->n)
+		{
+			/* Handle overflow here, e.g., print error message or return an error code */
+			return (0);
+		}
+
 		sum += current->n;
 		current = current->next;
-
-		/* Handle integer overflow */
-		if (sum < 0) /* Overflow occurred */
-		{
-			/* Print an error message or handle the overflow as needed */
-			return (0); /* Return 0 to indicate failure */
-		}
 	}
 
 	return (sum);
