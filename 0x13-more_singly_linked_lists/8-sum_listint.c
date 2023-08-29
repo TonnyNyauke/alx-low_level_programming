@@ -9,12 +9,24 @@
 int sum_listint(listint_t *head)
 {
 	int sum = 0;
-	listint_t *current = head;
+	listint_t *current;
+
+	if (head == NULL)
+		return (0); /* Return 0 for an empty list */
+
+	current = head;
 
 	while (current != NULL)
 	{
 		sum += current->n;
-		current = current->next
+		current = current->next;
+
+		/* Handle integer overflow */
+		if (sum < 0) /* Overflow occurred */
+		{
+			/* Print an error message or handle the overflow as needed */
+			return (0); /* Return 0 to indicate failure */
+		}
 	}
 
 	return (sum);
