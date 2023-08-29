@@ -1,36 +1,21 @@
 #include "lists.h"
-#include <limits.h> /* For INT_MAX */
 
 /**
- * sum_listint - Returns the sum of all the data (n)
- * of a listint_t linked list.
- * @head: Pointer to the head of the linked list.
- * Return: The sum of all the data (n) or 0 if the list is empty.
+ * sum_listint - returns the sum of all data of a listint_t linked list
+ * @head: pointer to the head
+ * Return: if list empty return 0
  */
+
 int sum_listint(listint_t *head)
 {
-	int sum = 0;
-	listint_t *current;
+	int sums = 0;
 
-	/* Return 0 for an empty list */
-	if (head == NULL)
-		return (0);
-
-	current = head;
-
-	while (current != NULL)
+	while (head != NULL)
 	{
-		/* Handle integer overflow */
-		if (sum > INT_MAX - current->n)
-		{
-			/* Handle overflow here, e.g., print error message or return an error code */
-			return (0);
-		}
+		sums += head->n;
 
-		sum += current->n;
-		current = current->next;
+		head = head->next;
 	}
 
-	return (sum);
+	return (sums);
 }
-
