@@ -8,21 +8,22 @@
  */
 unsigned int binary_to_uint(const char *b)
 {
-	int index = 0;
-	unsigned int sum = 0;
+	unsigned int result = 0;
 
 	if (b == NULL)
-		return (NULL);
+		return (0);
 
-	while (b[index] != '\0')
+	int index = 0;
+	while (b[index] == '0' || b[index] == '1')
 	{
-		if (b[index] != '0' && b[index] != '1')
-			return (0);
-
-		sum = (sum << 1) + (b[index] - '0');
+		result <<= 1;
+		result += b[index] - '0';
 		index++;
 	}
 
-	return (sum);
+	if (b[index] != '\0')
+		return (0);
+
+	return (result);
 }
 
