@@ -19,8 +19,8 @@ unsigned int binary_to_uint(const char *b)
 		if (b[index] != '0' && b[index] != '1')
 			return (0);
 
-		sum = (sum << 1) + (b[length] - '0');
-		length++;
+		sum = (sum << 1) + (b[index] - '0');
+		index++;
 	}
 
 	return (sum);
