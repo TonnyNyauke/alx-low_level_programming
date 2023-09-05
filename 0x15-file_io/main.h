@@ -24,6 +24,9 @@ void print_type(unsigned int e_type, unsigned char *e_ident);
 void close_elf(int elf);
 void print_entry(unsigned long int e_entry, unsigned char *e_ident);
 
+void print_error(const char *msg);
+void print_elf_header(Elf64_Ehdr *header);
+
 #define BUFSIZE 1024
 
 #endif
