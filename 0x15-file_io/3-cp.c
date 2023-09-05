@@ -1,100 +1,99 @@
 #include "main.h"
 
-/**
- * check_arguments - Checks if the program arguments are valid.
- * @argc: Number of arguments.
- * @argv: Array of arguments.
- */
-void check_arguments(int argc, char *argv[])
-{
-	if (argc != 3)
-	{
-		dprintf(STDERR_FILENO, "Usage: %s file_from file_to\n", argv[0]);
-		exit(97);
-	}
-}
+char *make_buffer(char *file);
+void close_file(int fd);
 
 /**
- * open_source_file - Opens the source file for reading.
- * @filename: The name of the source file.
- * @permissions: The permissions to use when creating the destination file.
- * @source_fd: A pointer to the source file descriptor.
+ * make_buffer - allocates 1024 bytes for a buffer
+ * @file: Name of the file buffer is storing chars
+ * Return: A pointer to the newly allocated buffer
  */
-void open_source_file(const char *filename, mode_t permissions __attribute__((unused)), int *source_fd)
+
+char *make_buffer(char *file)
 {
-	*source_fd = open(filename, O_RDONLY);
+	char *huffer;
 
-	if (*source_fd == -1)
+	huffer = malloc(sizeof(char) * 1024);
+
+	if (huffer == NULL)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", filename);
-		exit(98);
-	}
-}
-
-/**
- * open_dest_file - Opens the destination file for writing.
- * @filename: The name of the destination file.
- * @permissions: The permissions to use when creating the destination file.
- * @dest_fd: A pointer to the destination file descriptor.
- */
-void open_dest_file(const char *filename, mode_t permissions, int *dest_fd)
-{
-	*dest_fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, permissions);
-
-	if (*dest_fd == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", filename);
+		dprintf(STDERR_FILENO,
+				"Error: Can't write to %s\n", file);
 		exit(99);
 	}
+	return (huffer);
 }
 
 /**
- * copy_file_content - Copies content from source to destination file.
- * @source_fd: The source file descriptor.
- * @dest_fd: The destination file descriptor.
+ * close_file - closes file descriptors
+ * @fd: File desciptor to be closed
  */
-void copy_file_content(int source_fd, int dest_fd)
+
+void close_file(int fd)
 {
-	char buffer[BUFSIZE];
-	ssize_t read_result, write_result;
+	int d;
 
-	while ((read_result = read(source_fd, buffer, 1024)) > 0)
+	d = close(fd);
+	if (d == -1)
 	{
-		write_result = write(dest_fd, buffer, read_result);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+		exit(100);
+	}
+}
 
-		if (write_result == -1)
+/**
+ * main - Copies the content of a file to another file
+ * @argc: number of arguments supplied
+ * @argv: array of pointers.
+ * Return: 0 on success.
+ * if argc is incorrect - exit code is 97
+ * if file_from does not exist - exit code is 98
+ * if file_to cannot be crreated - exit code is 99
+ * if file_to or file_from cannot be closed - exit code is 100
+ */
+
+int main(int argc, char *argv[])
+{
+	int form, tee, r, w;
+	char *cute;
+
+	if (argc != 3)
+	{
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		exit(97);
+	}
+
+	cute = make_buffer(argv[2]);
+	form = open(argv[1], O_RDONLY);
+	r = read(form, cute, 1024);
+	tee = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+
+	do{
+		if (form == -1 || r == -1)
 		{
-			dprintf(STDERR_FILENO, "Error: Can't write to destination file\n");
+			dprintf(STDERR_FILENO,
+					"Error: Can't read from file %s\n", argv[1]);
+			free(cute);
+			exit(98);
+		}
+
+		w = write(tee, cute, r);
+		if (tee == -1 || w == -1)
+		{
+			dprintf(STDERR_FILENO,
+					"Error: Can't write to %s\n", argv[2]);
+			free(cute);
 			exit(99);
 		}
-	}
 
-	if (read_result == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from source file\n");
-		exit(98);
+		r = read(form, cute, 1024);
+		tee = open(argv[2], O_WRONLY | O_APPEND);
 	}
+	while (r > 0);
+
+	free(cute);
+	close_file(form);
+	close_file(tee);
+
+	return (0);
 }
-
-/**
- * close_files - Closes source and destination file descriptors.
- * @source_fd: The source file descriptor.
- * @dest_fd: The destination file descriptor.
- */
-void close_files(int source_fd, int dest_fd)
-{
-	if (close(source_fd) == -1)
-	{
-		dprintf(STDERR_FILENO,
-			"Error: Can't close source file descriptor %d\n", source_fd);
-		exit(100);
-	}
-
-	if (close(dest_fd) == -1)
-	{
-		dprintf(STDERR_FILENO,
-			"Error: Can't close destination file descriptor %d\n", dest_fd);
-		exit(100);
-	}
-}
-
